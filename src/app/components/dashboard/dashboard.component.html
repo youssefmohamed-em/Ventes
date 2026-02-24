@@ -1,0 +1,27 @@
+<div class="p-3 sm:p-6 lg:p-8 flex flex-col gap-4 sm:gap-6">
+
+  <!-- الكروت -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+    <app-cards title="{{ 'DASHBOARD.TOTAL_PROFIT' | translate }}" value="$2,435k" icon="pi pi-chart-line"
+      percent="-3.5%" color="red"></app-cards>
+    <app-cards title="{{ 'DASHBOARD.TOTAL_CLAIMS' | translate }}" value="3.5M" icon="pi pi-book" percent="+15%"
+      color="green"></app-cards>
+  </div>
+
+  <!-- الجدول -->
+  <!-- <div class="w-full">
+    <app-tables [columns]="columns" [data]="data"></app-tables> -->
+  <!-- </div> -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <app-charts title="{{ 'DASHBOARD.SALES_OVERVIEW' | translate }}"
+      subtitle="{{ 'DASHBOARD.LAST_6_MONTHS' | translate }}" color="blue" type="line"></app-charts>
+    <app-charts title="{{ 'DASHBOARD.REVENUE_GROWTH' | translate }}"
+      subtitle="{{ 'DASHBOARD.LAST_6_MONTHS' | translate }}" color="emerald" type="bar"></app-charts>
+    <app-charts title="{{ 'DASHBOARD.CLAIMS_TRACKER' | translate }}"
+      subtitle="{{ 'DASHBOARD.LAST_6_MONTHS' | translate }}" color="violet" type="radar"></app-charts>
+    <app-charts title="{{ 'DASHBOARD.PROFIT_MARGIN' | translate }}"
+      subtitle="{{ 'DASHBOARD.LAST_6_MONTHS' | translate }}" color="rose" type="doughnut"></app-charts>
+  </div>
+
+
+</div>

@@ -1,0 +1,110 @@
+<div class="bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 transition-colors overflow-hidden">
+
+  <!-- Filter Header -->
+  <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-gray-800">
+    <div class="flex items-center gap-2">
+      <div class="w-8 h-8 bg-blue-50 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
+        <i class="pi pi-filter text-blue-600 dark:text-blue-400 text-sm"></i>
+      </div>
+      <span class="font-semibold text-gray-700 dark:text-gray-200 text-sm">
+        {{ 'FILTERS.FILTERS' | translate }}
+      </span>
+      
+      <!-- Active filters badge -->
+      <span 
+        *ngIf="activeFilterCount() > 0"
+        class="px-2 py-0.5 bg-blue-600 text-white text-xs rounded-full font-bold">
+        {{ activeFilterCount() }}
+      </span>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <!-- Reset -->
+      <button
+        *ngIf="activeFilterCount() > 0"
+        class="flex items-center gap-1.5 px-3 py-1.5 text-xs text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors font-semibold"
+        (click)="resetFilters()">
+        <i class="pi pi-times text-xs"></i>
+        {{ 'FILTERS.CLEAR_ALL' | translate }}
+      </button>
+
+      <!-- Toggle -->
+      <button
+        class="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200"
+        [ngClass]="showFilters 
+          ? 'bg-blue-600 text-white shadow-md shadow-blue-200 dark:shadow-blue-900' 
+          : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'"
+        (click)="showFilters = !showFilters">
+        <i class="pi text-xs" [ngClass]="showFilters ? 'pi-chevron-up' : 'pi-chevron-down'"></i>
+        {{ showFilters ? ('FILTERS.HIDE' | translate) : ('FILTERS.SHOW' | translate) }} {{ 'FILTERS.FILTERS' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Filter Panel -->
+  <div 
+    class="overflow-hidden transition-all duration-300 ease-in-out"
+    [ngClass]="showFilters ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'">
+    
+    <div class="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 bg-gray-50/50 dark:bg-gray-800/30">
+
+      <!-- Customer Name -->
+      <div class="flex flex-col gap-1.5">
+        <label class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+          {{ 'FILTERS.CUSTOMER_NAME' | translate }}
+        </label>
+        <div class="relative">
+          <i class="pi pi-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+          <input
+            type="text"
+            [(ngModel)]="filters.customer_name"
+            (input)="applyFilters()"
+            [placeholder]="'FILTERS.CUSTOMER_NAME' | translate"
+            class="w-full pl-9 pr-3 py-2.5 text-sm border border-gray-200 dark:border-gray-700 rounded-xl 
+                   bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 
+                   focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent
+                   placeholder:text-gray-300 dark:placeholder:text-gray-600 transition-all"
+          />
+        </div>
+      </div>
+
+      <!-- Status -->
+      <div class="flex flex-col gap-1.5">
+        <label class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+          {{ 'FILTERS.STATUS' | translate }}
+        </label>
+        <div class="relative">
+          <i class="pi pi-tag absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm pointer-events-none"></i>
+          <select
+            [(ngModel)]="filters.status"
+            (change)="applyFilters()"
+            class="w-full pl-9 pr-8 py-2.5 text-sm border border-gray-200 dark:border-gray-700 rounded-xl 
+                   bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100
+                   focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent
+                   appearance-none cursor-pointer transition-all"
+          >
+            <option value="">{{ 'FILTERS.ALL_STATUSES' | translate }}</option>
+            <option value="pending">🟡 {{ 'FILTERS.PENDING' | translate }}</option>
+            <option value="completed">🟢 {{ 'FILTERS.COMPLETED' | translate }}</option>
+            <option value="IN_PROGRESS">🔵 {{ 'FILTERS.IN_PROGRESS' | translate }}</option>
+          </select>
+          <i class="pi pi-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs pointer-events-none"></i>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="p-4">
+    <app-tables
+      [columns]="columns"
+      [data]="filteredList"
+      [totalRecords]="totalRecords"
+      selectionMode="multiple"
+      (pageChange)="loadOrders($event)"
+      (selectionChange)="selected($event)">
+    </app-tables>
+  </div>
+
+</div>

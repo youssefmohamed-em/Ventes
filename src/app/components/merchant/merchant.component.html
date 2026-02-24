@@ -1,0 +1,32 @@
+<div class="mb-4 relative">
+  <!-- أيقونة البحث -->
+  <span class="absolute inset-y-0 left-3 flex items-center text-gray-400 dark:text-gray-300">
+    <i class="pi pi-search text-lg"></i>
+  </span>
+
+  <input
+    type="text"
+    [(ngModel)]="searchTerm"
+    (input)="onSearch()"
+    [placeholder]="'SEARCH_MERCHANTS' | translate"
+    class="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-300 dark:border-gray-700 
+           bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100
+           placeholder-gray-400 dark:placeholder-gray-500
+           focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent
+           transition-all duration-200 shadow-sm hover:shadow-md"
+  />
+</div>
+  
+  <app-tables
+      [columns]="columns"
+      [data]="merchants"
+      
+      [totalRecords]="totalRecords"
+      [selectionMode]="'multiple'"
+      (pageChange)="onPageChange($event)"
+      (selectionChange)="onSelectionChange($event)"
+      
+    ></app-tables>
+
+
+    

@@ -1,0 +1,63 @@
+{
+  "HEADER": {
+    "OVERVIEW": "نظرة عامة",
+    "TOGGLE_THEME": "تبديل الوضع",
+    "LOGOUT": "تسجيل الخروج"
+  },
+  "SIDEBAR": {
+    "VENTES": "فينتس",
+    "DASHBOARD": "لوحة التحكم",
+    "ORDERS": "الطلبات",
+    "MERCHANT": "التاجر",
+    "LANGUAGE_AR": "عربي",
+    "LANGUAGE_EN": "English"
+  },
+  "CARD": {
+    "VIEW_REPORT": "عرض التقرير"
+  },
+    "DASHBOARD": {
+    "TOTAL_PROFIT": "إجمالي الربح",
+    "TOTAL_CLAIMS": "إجمالي عدد المطالبات",
+    "SALES_OVERVIEW": "نظرة على المبيعات",
+    "REVENUE_GROWTH": "نمو الإيرادات",
+    "CLAIMS_TRACKER": "متابعة المطالبات",
+    "PROFIT_MARGIN": "هامش الربح",
+    "LAST_6_MONTHS": "آخر 6 أشهر"
+  },
+   "DETAILS": {
+    "TOTAL": "الإجمالي",
+    "HIGHEST": "الأعلى",
+    "LOWEST": "الأدنى"
+  },
+    "FILTERS": {
+    "FILTERS": "الفلاتر",
+    "CLEAR_ALL": "مسح الكل",
+    "SHOW": "عرض",
+    "HIDE": "إخفاء",
+    "CUSTOMER_NAME": "اسم العميل",
+    "STATUS": "الحالة",
+    "ALL_STATUSES": "جميع الحالات",
+    "PENDING": "قيد الانتظار",
+    "COMPLETED": "مكتمل",
+    "IN_PROGRESS": "قيد التنفيذ"
+  },
+   "TABLE": {
+    "SHOWING": "عرض",
+    "OF": "من",
+    "NAME": "الاسم",
+    "STATUS": "الحالة",
+    "CATEGORY": "الفئة",
+    "DATE": "التاريخ"
+  },
+    "ORDERS": {
+    "ID": "المعرف",
+    "CUSTOMER_NAME": "اسم العميل",
+    "STATUS": "الحالة",
+    "TOTAL": "الإجمالي",
+    "CURRENCY": "العملة",
+    "CREATED_AT": "تاريخ الإنشاء",
+    "NAME":"الاسم",
+    "COUNTRY":" البلد"
+  },
+  "SEARCH_MERCHANTS": "ابحث عن التجار..."
+}

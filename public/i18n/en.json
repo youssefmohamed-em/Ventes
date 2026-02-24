@@ -1,0 +1,65 @@
+{
+  "HEADER": {
+    "OVERVIEW": "Overview",
+    "TOGGLE_THEME": "Toggle Theme",
+    "LOGOUT": "Logout"
+  },
+  
+  "SIDEBAR": {
+      "VENTES": "VENTES",
+      "DASHBOARD": "Dashboard",
+      "ORDERS": "Orders",
+      "MERCHANT": "Merchant",
+      "LANGUAGE_AR": "Arabic",
+      "LANGUAGE_EN": "English"
+      
+    },
+  "CARD": {
+    "VIEW_REPORT": "View Report"
+  },
+    "DASHBOARD": {
+    "TOTAL_PROFIT": "Total Profit",
+    "TOTAL_CLAIMS": "Total NO.of Claim",
+    "SALES_OVERVIEW": "Sales Overview",
+    "REVENUE_GROWTH": "Revenue Growth",
+    "CLAIMS_TRACKER": "Claims Tracker",
+    "PROFIT_MARGIN": "Profit Margin",
+    "LAST_6_MONTHS": "Last 6 months"
+  },
+   "DETAILS": {
+    "TOTAL": "Total",
+    "HIGHEST": "Highest",
+    "LOWEST": "Lowest"
+  },
+   "FILTERS": {
+    "FILTERS": "Filters",
+    "CLEAR_ALL": "Clear all",
+    "SHOW": "Show",
+    "HIDE": "Hide",
+    "CUSTOMER_NAME": "Customer Name",
+    "STATUS": "Status",
+    "ALL_STATUSES": "All Statuses",
+    "PENDING": "Pending",
+    "COMPLETED": "Completed",
+    "IN_PROGRESS": "In Progress"
+  },
+    "TABLE": {
+    "SHOWING": "Showing",
+    "OF": "of",
+    "NAME": "Name",
+    "STATUS": "Status",
+    "CATEGORY": "Category",
+    "DATE": "Date"
+  },
+    "ORDERS": {
+    "ID": "ID",
+    "CUSTOMER_NAME": "Customer Name",
+    "STATUS": "Status",
+    "TOTAL": "Total",
+    "CURRENCY": "Currency",
+    "CREATED_AT": "Created At",
+     "NAME":"Name",
+    "COUNTRY":" Country"
+  },
+    "SEARCH_MERCHANTS": "Search Merchants..."
+}

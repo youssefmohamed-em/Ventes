@@ -1,0 +1,56 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+@import "primeicons/primeicons.css";
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+html, body {
+  @apply dark:bg-gray-900;
+}
+
+html[dir="rtl"] {
+  direction: rtl;  /* يضمن RTL لكل الصفحة */
+  text-align: right;
+}
+
+html[dir="rtl"] .flex-row {
+  flex-direction: row-reverse; /* يعكس كل flex-row */
+}
+
+html[dir="rtl"] .justify-start {
+  justify-content: flex-end;
+}
+
+html[dir="rtl"] .pl-3 {
+  padding-left: 0 !important;
+  padding-right: 0.75rem !important; /* نفس قيمة pl-3 */
+}
+
+html[dir="rtl"] .pr-3 {
+  padding-right: 0 !important;
+  padding-left: 0.75rem !important; /* نفس قيمة pr-3 */
+}
+/* RTL Support */
+html[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
+
+
+
+
+
+
+/* Nav links reverse for RTL */
+html[dir="rtl"] .nav-link {
+  flex-direction: row-reverse;
+}
+html[dir="rtl"] .nav-link i {
+  margin-left: 0.75rem;
+  margin-right: 0;
+}
+
+/* Footer button icon/text reverse RTL */
+html[dir="rtl"] .flex.items-center.justify-center {
+  flex-direction: row-reverse;
+}
