@@ -1,38 +1,68 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, ViewChild, OnInit, inject, effect } from '@angular/core';
+import { SidebarComponent } from '../sidebar/sidebar.component';
+import { HeaderComponent } from '../header/header.component';
+import { CommonModule } from '@angular/common';
+import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterModule } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { HeaderComponent } from "../header/header.component";
-import { RouterModule } from "@angular/router";
-import { SidebarComponent } from "../sidebar/sidebar.component";
+import { ProgressSpinnerModule, ProgressSpinner } from 'primeng/progressspinner';
+import { LoadingService } from '../../services/loading.service';
+import { AuthService } from '../../services/auth.service';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
-  styleUrl: './layout.component.css',
-  imports: [HeaderComponent, RouterModule, SidebarComponent]
+  imports: [SidebarComponent, HeaderComponent, CommonModule, RouterModule, ToastModule],
 })
 export class LayoutComponent implements OnInit {
+  loadingservices = inject(LoadingService);
+  private auth = inject(AuthService);
+  private messageService = inject(MessageService);
 
-  lang = signal(localStorage.getItem('lang') || 'en');
+  @ViewChild('sidebar') sidebar!: SidebarComponent;
 
-  get currentDir(): string {
-    return this.lang() === 'ar' ? 'rtl' : 'ltr';
+  currentDir: 'ltr' | 'rtl' = 'ltr';
+
+  constructor(private translate: TranslateService, private router: Router) {
+    effect(() => {
+      if (this.auth.loginSuccess()) {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Welcome back!',
+          detail: 'Login successful',
+          life: 3000
+        });
+        this.auth.loginSuccess.set(false);
+      }
+    });
   }
 
-  constructor(private translate: TranslateService) {}
+  ngOnInit(): void {
+    const savedLang = localStorage.getItem('lang') || 'en';
+    this.translate.use(savedLang);
+    this.currentDir = savedLang === 'ar' ? 'rtl' : 'ltr';
 
-  ngOnInit() {
-    this.applyLang(this.lang());
-  }
+    this.translate.onLangChange.subscribe(({ lang }) => {
+      this.currentDir = lang === 'ar' ? 'rtl' : 'ltr';
+      localStorage.setItem('lang', lang);
+    });
 
-  applyLang(lang: string) {
-    this.translate.use(lang);
-    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-    document.documentElement.lang = lang;
-    localStorage.setItem('lang', lang);
-    this.lang.set(lang);
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        this.loadingservices.isloading.set(true);
+      } else if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
+        this.loadingservices.isloading.set(false);
+      }
+    });
   }
 
   switchLang(lang: string) {
-    this.applyLang(lang); // ✅ مش هنكرر الكود، كله في applyLang
+    this.translate.use(lang);
+    this.currentDir = lang === 'ar' ? 'rtl' : 'ltr';
+  }
+
+  toggleSidebar() {
+    this.sidebar.mobileOpen.set(!this.sidebar.mobileOpen());
   }
 }

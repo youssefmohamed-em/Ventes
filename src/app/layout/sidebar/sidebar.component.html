@@ -1,12 +1,24 @@
+<!-- Overlay -->
+<div
+  *ngIf="mobileOpen()"
+  class="fixed inset-0 bg-black/40 z-40 lg:hidden"
+  (click)="mobileOpen.set(false)">
+</div>
+
+<!-- Sidebar -->
 <div
   class="h-full bg-[#4b2bda] dark:bg-gray-800 text-white 
          flex flex-col justify-between shadow-2xl 
-         overflow-y-auto transition-all duration-300 p-3"
+         overflow-y-auto transition-all duration-300 p-3
+         fixed top-0 left-0 z-50 lg:relative lg:translate-x-0"
   [ngClass]="{
     'w-[72px]': collapsed(),
     'w-[220px]': !collapsed(),
     'rounded-r-3xl': !isRtl,
-    'rounded-l-3xl': isRtl
+    'rounded-l-3xl': isRtl,
+    'translate-x-0': mobileOpen(),
+    '-translate-x-full': !mobileOpen(),
+    'lg:h-screen': true
   }"
 >
 
@@ -18,22 +30,21 @@
       </div>
       <div *ngIf="collapsed()" class="text-xl font-bold mx-auto">V</div>
 
-    <button
-  class="hidden lg:flex h-9 w-9 bg-white/10 rounded-xl items-center justify-center hover:bg-white/20 shrink-0"
-  (click)="toggleCollapse()"
->
-  <i class="pi" [class]="getCollapseIcon()"></i>
-</button>
+      <button
+        class="hidden lg:flex h-9 w-9 bg-white/10 rounded-xl items-center justify-center hover:bg-white/20 shrink-0"
+        (click)="toggleCollapse()">
+        <i class="pi" [class]="getCollapseIcon()"></i>
+      </button>
     </div>
 
     <!-- NAVIGATION -->
     <nav class="flex flex-col gap-2 px-2">
-      <a class="flex nav-link items-center gap-3 px-3 py-3 rounded-xl hover:bg-white/10 transition-all"
+      <a class="flex nav-link items-center gap-3 px-3 py-3 rounded-xl hover:bg-white/10 transition-all font-bold"
          [ngClass]="collapsed() ? 'justify-center' : ''"
          routerLink="/layout/dashboard"
          routerLinkActive="bg-white/20 font-bold">
         <i class="pi pi-chart-bar text-xl shrink-0"></i>
-        <span *ngIf="!collapsed()" class="text-sm whitespace-nowrap">
+        <span *ngIf="!collapsed()" class="text-sm whitespace-nowrap font-bold">
           {{ 'SIDEBAR.DASHBOARD' | translate }}
         </span>
       </a>
@@ -43,7 +54,7 @@
          routerLink="/layout/orders"
          routerLinkActive="bg-white/20 font-bold">
         <i class="pi pi-shopping-bag text-xl shrink-0"></i>
-        <span *ngIf="!collapsed()" class="text-sm whitespace-nowrap">
+        <span *ngIf="!collapsed()" class="text-sm whitespace-nowrap font-bold">
           {{ 'SIDEBAR.ORDERS' | translate }}
         </span>
       </a>
@@ -53,7 +64,7 @@
          routerLink="/layout/merchant"
          routerLinkActive="bg-white/20 font-bold">
         <i class="pi pi-shop text-xl shrink-0"></i>
-        <span *ngIf="!collapsed()" class="text-sm whitespace-nowrap">
+        <span *ngIf="!collapsed()" class="text-sm whitespace-nowrap font-bold">
           {{ 'SIDEBAR.MERCHANT' | translate }}
         </span>
       </a>
@@ -68,9 +79,7 @@
              bg-[#38bdf8] hover:bg-[#7dd3fc] 
              text-white transition-all duration-200"
       (click)="toggleLanguage()">
-
       <i class="pi pi-language text-lg"></i>
-
       <span *ngIf="!collapsed()" class="whitespace-nowrap">
         {{ currentLang() === 'ar' ? ('SIDEBAR.LANGUAGE_EN' | translate) : ('SIDEBAR.LANGUAGE_AR' | translate) }}
       </span>

@@ -1,5 +1,4 @@
 <div class="mb-4 relative">
-  <!-- أيقونة البحث -->
   <span class="absolute inset-y-0 left-3 flex items-center text-gray-400 dark:text-gray-300">
     <i class="pi pi-search text-lg"></i>
   </span>
@@ -16,17 +15,26 @@
            transition-all duration-200 shadow-sm hover:shadow-md"
   />
 </div>
-  
-  <app-tables
-      [columns]="columns"
-      [data]="merchants"
-      
-      [totalRecords]="totalRecords"
-      [selectionMode]="'multiple'"
-      (pageChange)="onPageChange($event)"
-      (selectionChange)="onSelectionChange($event)"
-      
-    ></app-tables>
 
-
-    
+<app-tables
+  [columns]="columns"
+  [data]="merchants"
+  [totalRecords]="totalRecords"
+  [selectionMode]="'multiple'"
+  (pageChange)="onPageChange($event)"
+  (selectionChange)="onSelectionChange($event)"
+  [statusColorMap]="{
+    'DRAFT':     'bg-gray-100 text-gray-500 border-gray-300',
+    'NEW':       'bg-blue-100 text-blue-600 border-blue-300',
+    'ACTIVE':    'bg-green-100 text-green-700 border-green-300',
+    'INACTIVE':  'bg-red-100 text-red-600 border-red-300',
+    'SUSPENDED': 'bg-orange-100 text-orange-600 border-orange-300'
+  }"
+  [dotColorMap]="{
+    'DRAFT':     'bg-gray-400',
+    'NEW':       'bg-blue-500',
+    'ACTIVE':    'bg-green-500',
+    'INACTIVE':  'bg-red-500',
+    'SUSPENDED': 'bg-orange-500'
+  }"
+></app-tables>

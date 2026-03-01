@@ -3,7 +3,7 @@
   <p-table
     [value]="data"
     [paginator]="true"
-    [rows]="10"
+    [rows]="rows"
     [totalRecords]="totalRecords"
     [lazy]="true"
     (onLazyLoad)="onPage($event)"
@@ -41,26 +41,50 @@
         <td *ngFor="let col of columns; let first = first"
             class="py-3.5 px-4 text-sm text-gray-600 dark:text-gray-300"
             [class.font-semibold]="first"
-            [class.text-gray-900]="first"
-            [ngClass]="{
-              'text-yellow-500 font-bold': getValue(row, col.field) === 'Gold',
-              'text-emerald-500 font-bold': getValue(row, col.field) === 'Green',
-              'text-gray-400 font-semibold': getValue(row, col.field) === 'Silver',
-              'text-orange-400 font-semibold': getValue(row, col.field) === 'Bronze'
-            }">
+            [class.text-gray-900]="first">
 
-          <!-- Name cell -->
-          <div class="flex items-center gap-3" *ngIf="col.field === 'name'; else other">
-            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-200 to-violet-300
-                        dark:from-indigo-700 dark:to-violet-600 overflow-hidden flex-shrink-0
-                        ring-2 ring-white dark:ring-gray-800 shadow-sm flex items-center justify-center">
-              <span class="text-xs font-bold text-indigo-600 dark:text-indigo-300 uppercase">
-                {{ getValue(row, col.field)?.[0] }}
+          <!-- Status Column -->
+          <ng-container *ngIf="col.field === 'status'; else other">
+            <span
+              class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border"
+              [ngClass]="statusColorMap[row.statusColor] ?? 'bg-slate-100 text-slate-500 border-slate-300'">
+              <span class="w-1.5 h-1.5 rounded-full"
+                [ngClass]="dotColorMap[row.statusColor] ?? 'bg-slate-400'">
               </span>
+              {{ row.status }}
+            </span>
+          </ng-container>ِِ
+
+          <!-- Other Columns -->
+          <ng-template #other>
+
+            <!-- Name Column -->
+            <div *ngIf="col.field === 'name'; else dateCheck" class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-200 to-violet-300
+                          dark:from-indigo-700 dark:to-violet-600 overflow-hidden flex-shrink-0
+                          ring-2 ring-white dark:ring-gray-800 shadow-sm flex items-center justify-center">
+                <span class="text-xs font-bold text-indigo-600 dark:text-indigo-300 uppercase">
+                  {{ getValue(row, col.field)?.[0] }}
+                </span>
+              </div>
+              <span>{{ getValue(row, col.field) }}</span>
             </div>
-            <span>{{ getValue(row, col.field) }}</span>
-          </div>
-          <ng-template #other>{{ getValue(row, col.field) }}</ng-template>
+
+            <!-- Created At Column -->
+            <ng-template #dateCheck>
+              <div *ngIf="col.field === 'created'; else normal" class="flex flex-col gap-0.5">
+                <span class="text-sm font-medium text-gray-700 dark:text-gray-200">
+                  {{ getValue(row, col.field) | date: 'dd MMM yyyy' }}
+                </span>
+                <span class="text-xs text-gray-400 dark:text-gray-500">
+                  {{ getValue(row, col.field) | date: 'hh:mm a' }}
+                </span>
+              </div>
+              <ng-template #normal>{{ getValue(row, col.field) }}</ng-template>
+            </ng-template>
+
+          </ng-template>
+
         </td>
 
         <!-- Actions -->

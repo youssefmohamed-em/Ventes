@@ -8,12 +8,14 @@ import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common
 import { authInterceptor } from './auth.interceptor';
  import {provideTranslateService} from "@ngx-translate/core";
 import { provideTranslateHttpLoader, TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { MessageService } from 'primeng/api';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader( );
 }
 export const appConfig: ApplicationConfig = {
   providers: [
+    MessageService ,
     provideHttpClient(withInterceptors([authInterceptor])),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),

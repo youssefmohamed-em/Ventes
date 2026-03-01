@@ -1,23 +1,37 @@
 <div class="w-full px-6 py-4 flex justify-between items-center border-b border-gray-100 dark:border-gray-800 transition-all">
 
-  <!-- Left Section (يتعكس تلقائياً مع dir) -->
+  <!-- Left Section -->
   <div class="flex items-center gap-4">
-    <!-- زر الـ menu للموبايل -->
-    <button 
-      class="p-2 lg:hidden hover:bg-gray-100 dark:hover:bg-gray-800 rounded-2xl transition-all" 
-      (click)="openSidebar.emit()">
+    <button class="p-2 lg:hidden hover:bg-gray-100 dark:hover:bg-gray-800 rounded-2xl transition-all" 
+            (click)="openSidebar.emit()">
       <i class="pi pi-bars text-xl dark:text-white"></i>
     </button>
-
     <h2 class="text-xl font-black text-slate-800 dark:text-white tracking-tight italic uppercase">
       {{ 'HEADER.OVERVIEW' | translate }}
     </h2>
+
+    <!-- Merchant Select — بيبان بس في Dashboard -->
+  <!-- Merchant Select — بيبان بس في Dashboard -->
+<div *ngIf="isDashboard" 
+     class="flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-2xl px-3 py-1.5 ms-4 shadow-md">
+  <i class="pi pi-building text-white text-sm"></i>
+  <p-select
+    [options]="merchants"
+    [(ngModel)]="selectedMerchant"
+    optionLabel="commercialName"
+    [filter]="true"
+    filterBy="commercialName,code"
+    placeholder="{{ 'DASHBOARD.SELECT_MERCHANT' | translate }}"
+    (onChange)="onMerchantChange()"
+    styleClass="border-0 shadow-none bg-transparent text-white text-sm w-48">
+  </p-select>
+</div>
+
   </div>
 
   <!-- Right Section -->
   <div class="flex items-center gap-3">
-
-    <!-- Dark Mode Toggle -->
+    
     <button 
       (click)="toggleDarkMode()" 
       class="h-11 w-11 flex items-center justify-center rounded-2xl transition-all duration-300 shadow-sm border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 group"
@@ -27,13 +41,6 @@
          style="font-size: 1.2rem"></i>
     </button>
 
-    <!-- Username -->
-    <div class="hidden md:flex items-center gap-2 h-11 px-4 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm">
-      <i class="pi pi-user text-indigo-600 dark:text-indigo-400"></i>
-      <span class="text-sm font-semibold text-slate-700 dark:text-white">{{ username }}</span>
-    </div>
-
-    <!-- Logout -->
     <button 
       class="flex items-center gap-2 h-11 px-5 bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-400 text-sm font-black rounded-2xl hover:bg-red-600 hover:text-white transition-all shadow-sm border border-red-100 dark:border-red-900/50 group"
       (click)="logout()">

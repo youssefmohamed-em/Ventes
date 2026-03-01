@@ -10,7 +10,7 @@
       "DASHBOARD": "Dashboard",
       "ORDERS": "Orders",
       "MERCHANT": "Merchant",
-      "LANGUAGE_AR": "Arabic",
+      "LANGUAGE_AR": "عربي",
       "LANGUAGE_EN": "English"
       
     },
@@ -61,5 +61,13 @@
      "NAME":"Name",
     "COUNTRY":" Country"
   },
-    "SEARCH_MERCHANTS": "Search Merchants..."
+    "SEARCH_MERCHANTS": "Search Merchants...",
+      "ERROR_404": {
+    "TITLE": "Page Not Found",
+    "DESCRIPTION": "The page you are looking for doesn’t exist or may have been moved.",
+    "BACK_HOME": "Back to Home"
+  },
+  "DAY":"day",
+  "MONTH":"month",
+  "YEAR":"year"
 }

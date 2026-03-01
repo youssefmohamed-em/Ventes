@@ -5,33 +5,38 @@ import { TablesComponent } from '../../shared/shared/components/tables/tables.co
 import { FormsModule } from '@angular/forms';
 import { debounceTime, Subject } from 'rxjs';
 import { MerchantfilterService } from '../../services/merchantfilter.service';
-import { TranslateService , TranslateModule } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+
 @Component({
   selector: 'app-merchant',
-  imports: [TablesComponent, FormsModule , TranslateModule,],
+  imports: [TablesComponent, FormsModule, TranslateModule],
   templateUrl: './merchant.component.html',
   styleUrls: ['./merchant.component.css']
 })
 export class MerchantComponent implements OnInit {
-constructor(public translate: TranslateService){
-   this.initColumns();
-}
+
+  constructor(public translate: TranslateService) {
+    this.initColumns();
+  }
+
   totalRecords = 0;
   merchants: (Merchant & { currencyName: string; countryName: string })[] = [];
   searchTerm = '';
-private merchantFilterService = inject(MerchantfilterService);
+
+  private merchantFilterService = inject(MerchantfilterService);
   private merchantService = inject(MerchantService);
   private searchSubject = new Subject<string>();
- initColumns(){
 
-  this.columns = [
+  initColumns() {
+    this.columns = [
       { field: 'id',           header: this.translate.instant('ORDERS.ID') },
       { field: 'name',         header: this.translate.instant('ORDERS.NAME') },
       { field: 'status',       header: this.translate.instant('ORDERS.STATUS') },
       { field: 'currencyName', header: this.translate.instant('ORDERS.CURRENCY') },
       { field: 'countryName',  header: this.translate.instant('ORDERS.COUNTRY') },
     ];
- }
+  }
+
   columns = [
     { field: 'id',           header: 'ID' },
     { field: 'name',         header: 'Name' },
@@ -43,8 +48,7 @@ private merchantFilterService = inject(MerchantfilterService);
   ngOnInit() {
     this.loadMerchants(0, 10, '');
 
-    // debounce عشان متبعتش request لكل حرف
-    this.searchSubject.pipe(debounceTime(400)).subscribe(term => {
+    this.searchSubject.pipe(debounceTime(600)).subscribe(term => {
       this.loadMerchants(0, 10, term);
     });
   }
@@ -55,7 +59,8 @@ private merchantFilterService = inject(MerchantfilterService);
         this.merchants = res.content.map(m => ({
           ...m,
           currencyName: m.defaultCurrency?.name,
-          countryName: m.country?.name
+          countryName: m.country?.name,
+          statusColor: m.status?.toUpperCase(),
         }));
         this.totalRecords = res.totalElements;
       },
@@ -64,7 +69,8 @@ private merchantFilterService = inject(MerchantfilterService);
   }
 
   onSearch() {
-    this.searchSubject.next(this.searchTerm);
+    // لا تبعت request غير لو فاضي أو 2 حروف على الأقل
+      this.searchSubject.next(this.searchTerm);
   }
 
   onPageChange(event: any) {
@@ -72,10 +78,20 @@ private merchantFilterService = inject(MerchantfilterService);
     this.loadMerchants(page, event.rows, this.searchTerm);
   }
 
+  onSelectionChange(selected: any[]) {
+    if (selected.length > 0) {
+      this.merchantFilterService.setSelectedMerchant(selected[0].code);
+    }
+  }
 
-onSelectionChange(selected: any[]) {
-  const ids = selected.map(m => m.id);
-  this.merchantFilterService.setSelectedMerchants(ids);
-}
-  
+  getStatusColor(status: string): string {
+    switch (status?.toUpperCase()) {
+      case 'DRAFT':     return 'draft';
+      case 'NEW':       return 'new';
+      case 'ACTIVE':    return 'active';
+      case 'INACTIVE':  return 'inactive';
+      case 'SUSPENDED': return 'suspended';
+      default:          return status?.toUpperCase() ?? '';
+    }
+  }
 }

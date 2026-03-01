@@ -1,0 +1,28 @@
+<div class="min-h-screen flex flex-col items-center justify-center bg-gray-50 dark:bg-gray-900 p-6">
+  <div class="text-center">
+    
+    <!-- رقم الخطأ -->
+    <h1 class="text-9xl font-extrabold text-indigo-600 drop-shadow-lg">404</h1>
+
+    <!-- العنوان -->
+    <h2 class="mt-6 text-3xl font-semibold text-gray-800 dark:text-white">
+{{ "ERROR_404.TITLE" | translate }}
+
+    </h2>
+
+    <!-- الوصف -->
+    <p class="mt-4 text-gray-600 dark:text-gray-300">
+ {{ "ERROR_404.DESCRIPTION" | translate }}      
+    </p>
+
+    <!-- زر الرجوع -->
+    <a
+      routerLink="/layout/dashboard"
+      class="mt-8 inline-block px-6 py-3 bg-indigo-600 text-white font-medium rounded-xl 
+             hover:bg-indigo-700 transition-all duration-200 shadow-lg cursor-pointer"
+    >
+     {{ "ERROR_404.BACK_HOME" | translate }}
+    </a>
+  </div>
+</div>
+<router-outlet></router-outlet>
